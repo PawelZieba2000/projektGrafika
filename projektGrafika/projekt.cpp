@@ -1,6 +1,39 @@
 #include <GL/glut.h>
 #include <cmath>
 
+double katGlowny = 0.0;
+
+float merkuryX = sin(katGlowny + 45) * 0.15;
+float merkuryY = cos(katGlowny + 45) * 0.15;
+float merkuryR = 0.01;
+
+float wenusX = sin(katGlowny + 90) * 0.25;
+float wenusY = cos(katGlowny + 90) * 0.25;
+float wenusR = 0.02;
+
+float ziemiaX = sin(katGlowny + 135) * 0.35;
+float ziemiaY = cos(katGlowny + 135) * 0.35;
+float ziemiaR = 0.02;
+
+float marsX = sin(katGlowny + 180) * 0.45;
+float marsY = cos(katGlowny + 180) * 0.45;
+float marsR = 0.02;
+
+float jowiszX = sin(katGlowny + 225) * 0.55;
+float jowiszY = cos(katGlowny + 225) * 0.55;
+float jowiszR = 0.04;
+
+float saturnX = sin(katGlowny + 270) * 0.65;
+float saturnY = cos(katGlowny + 270) * 0.65;
+float saturnR = 0.038;
+
+float uranX = sin(katGlowny + 315) * 0.75;
+float uranY = cos(katGlowny + 315) * 0.75;
+float uranR = 0.03;
+
+float neptunX = sin(katGlowny) * 0.85;
+float neptunY = cos(katGlowny) * 0.85;
+float neptunR = 0.03;
 
 void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwony, float zielony, float niebieski) {
 	float p = 0.0;
@@ -65,51 +98,84 @@ void orbitaPlanety(float promien, float wspX, float wspY) {
 	glPopMatrix();
 }
 
+void inicjalizacja() {
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void wyswietlanko() {
 	//slonce
 	nowaPlaneta(0.08, 0.0, 0.0, 1.0, 0.9, 0.0);
 
 	//Merkury
 	orbita(0.15);
-	nowaPlaneta(0.01, 0.0, -0.15, 1.0, 1.0, 1.0);
+	nowaPlaneta(merkuryR, merkuryX, merkuryY, 1.0, 1.0, 1.0);
 
 	//Wenus
 	orbita(0.25);
-	nowaPlaneta(0.02, 0.0, -0.25, 1.0, 0.9, 0.3);
+	nowaPlaneta(wenusR, wenusX, wenusY, 1.0, 0.9, 0.3);
 
 	//Ziemia
 	orbita(0.35);
-	nowaPlaneta(0.02, 0.0, -0.35, 0.1, 0.3, 0.7);
+	nowaPlaneta(ziemiaR, ziemiaX, ziemiaY, 0.1, 0.3, 0.7);
 
 	//Mars
 	orbita(0.45);
-	nowaPlaneta(0.02, 0.0, -0.45, 1.0, 0.35, 0.0);
+	nowaPlaneta(marsR, marsX, marsY, 1.0, 0.35, 0.0);
 
 	//Jowisz
 	orbita(0.55);
-	nowaPlaneta(0.04, 0.0, -0.55, 1.0, 0.6, 0.0);
+	nowaPlaneta(jowiszR, jowiszX, jowiszY, 1.0, 0.6, 0.0);
 
 	//Saturn
 	orbita(0.65);
-	orbitaPlanety(0.05, 0.0, -0.65);
-	nowaPlaneta(0.038, 0.0, -0.65, 1.0, 0.8, 0.0);
+	orbitaPlanety(0.05, saturnX, saturnY);
+	nowaPlaneta(saturnR, saturnX, saturnY, 1.0, 0.8, 0.0);
 
 	//Uran
 	orbita(0.75);
-	orbitaPlanety(0.04, 0.0, -0.75);
-	nowaPlaneta(0.03, 0.0, -0.75, 0.0, 0.9, 1.0);
+	orbitaPlanety(0.04, uranX, uranY);
+	nowaPlaneta(uranR, uranX, uranY, 0.0, 0.9, 1.0);
 
 	//Neptun
 	orbita(0.85);
-	orbitaPlanety(0.04, 0.0, -0.85);
-	nowaPlaneta(0.03, 0.0, -0.85, 0.0, 0.7, 1.0);
+	orbitaPlanety(0.04, neptunX, neptunY);
+	nowaPlaneta(neptunR, neptunX, neptunY, 0.0, 0.7, 1.0);
 
 	glFlush();
+	inicjalizacja();
 }
 
-void inicjalizacja() {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+void timer(int) {
+	glutPostRedisplay();
+	glutTimerFunc(1000 / 30, timer, 0);
+	if (katGlowny <= 360) {
+		merkuryX = sin(katGlowny + 45) * 0.15;
+		merkuryY = cos(katGlowny + 45) * 0.15;
+
+		wenusX = sin(katGlowny + 90) * 0.25;
+		wenusY = cos(katGlowny + 90) * 0.25;
+
+		ziemiaX = sin(katGlowny + 135) * 0.35;
+		ziemiaY = cos(katGlowny + 135) * 0.35;
+
+		marsX = sin(katGlowny + 180) * 0.45;
+		marsY = cos(katGlowny + 180) * 0.45;
+
+		jowiszX = sin(katGlowny + 225) * 0.55;
+		jowiszY = cos(katGlowny + 225) * 0.55;
+
+		saturnX = sin(katGlowny + 270) * 0.65;
+		saturnY = cos(katGlowny + 270) * 0.65;
+
+		uranX = sin(katGlowny + 315) * 0.75;
+		uranY = cos(katGlowny + 315) * 0.75;
+
+		neptunX = sin(katGlowny) * 0.85;
+		neptunY = cos(katGlowny) * 0.85;
+		katGlowny += 0.005;
+	}
+	else katGlowny = 0.0;
 }
 
 int main(int argc, char **argv) {
@@ -121,6 +187,7 @@ int main(int argc, char **argv) {
 	glutCreateWindow("Uklad sloneczny");
 	inicjalizacja();
 	glutDisplayFunc(wyswietlanko);
+	glutTimerFunc(0, timer, 0);
 	glutMainLoop();
 	return 0;
 }
