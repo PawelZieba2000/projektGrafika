@@ -1,38 +1,45 @@
 #include <GL/glut.h>
 #include <cmath>
 
-double katGlowny = 0.0;
 
-float merkuryX = sin(katGlowny + 45) * 0.15;
-float merkuryY = cos(katGlowny + 45) * 0.15;
+double merkuryKat = 45;
+float merkuryX = sin(merkuryKat) * 0.15;
+float merkuryY = cos(merkuryKat) * 0.15;
 float merkuryR = 0.01;
 
-float wenusX = sin(katGlowny + 90) * 0.25;
-float wenusY = cos(katGlowny + 90) * 0.25;
+double wenusKat = 90;
+float wenusX = sin(wenusKat) * 0.25;
+float wenusY = cos(wenusKat) * 0.25;
 float wenusR = 0.02;
 
-float ziemiaX = sin(katGlowny + 135) * 0.35;
-float ziemiaY = cos(katGlowny + 135) * 0.35;
+double ziemiaKat = 135;
+float ziemiaX = sin(ziemiaKat) * 0.35;
+float ziemiaY = cos(ziemiaKat) * 0.35;
 float ziemiaR = 0.02;
 
-float marsX = sin(katGlowny + 180) * 0.45;
-float marsY = cos(katGlowny + 180) * 0.45;
+double marsKat = 180;
+float marsX = sin(marsKat) * 0.45;
+float marsY = cos(marsKat) * 0.45;
 float marsR = 0.02;
 
-float jowiszX = sin(katGlowny + 225) * 0.55;
-float jowiszY = cos(katGlowny + 225) * 0.55;
+double jowiszKat = 225;
+float jowiszX = sin(jowiszKat) * 0.55;
+float jowiszY = cos(jowiszKat) * 0.55;
 float jowiszR = 0.04;
 
-float saturnX = sin(katGlowny + 270) * 0.65;
-float saturnY = cos(katGlowny + 270) * 0.65;
+double saturnKat = 270;
+float saturnX = sin(saturnKat) * 0.65;
+float saturnY = cos(saturnKat) * 0.65;
 float saturnR = 0.038;
 
-float uranX = sin(katGlowny + 315) * 0.75;
-float uranY = cos(katGlowny + 315) * 0.75;
+double uranKat = 315;
+float uranX = sin(uranKat) * 0.75;
+float uranY = cos(uranKat) * 0.75;
 float uranR = 0.03;
 
-float neptunX = sin(katGlowny) * 0.85;
-float neptunY = cos(katGlowny) * 0.85;
+double neptunKat = 0;
+float neptunX = sin(neptunKat) * 0.85;
+float neptunY = cos(neptunKat) * 0.85;
 float neptunR = 0.03;
 
 void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwony, float zielony, float niebieski) {
@@ -149,33 +156,62 @@ void wyswietlanko() {
 void timer(int) {
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 30, timer, 0);
-	if (katGlowny <= 360) {
-		merkuryX = sin(katGlowny + 45) * 0.15;
-		merkuryY = cos(katGlowny + 45) * 0.15;
 
-		wenusX = sin(katGlowny + 90) * 0.25;
-		wenusY = cos(katGlowny + 90) * 0.25;
-
-		ziemiaX = sin(katGlowny + 135) * 0.35;
-		ziemiaY = cos(katGlowny + 135) * 0.35;
-
-		marsX = sin(katGlowny + 180) * 0.45;
-		marsY = cos(katGlowny + 180) * 0.45;
-
-		jowiszX = sin(katGlowny + 225) * 0.55;
-		jowiszY = cos(katGlowny + 225) * 0.55;
-
-		saturnX = sin(katGlowny + 270) * 0.65;
-		saturnY = cos(katGlowny + 270) * 0.65;
-
-		uranX = sin(katGlowny + 315) * 0.75;
-		uranY = cos(katGlowny + 315) * 0.75;
-
-		neptunX = sin(katGlowny) * 0.85;
-		neptunY = cos(katGlowny) * 0.85;
-		katGlowny += 0.005;
+	if (merkuryKat <= 360) {
+		merkuryX = sin(merkuryKat) * 0.15;
+		merkuryY = cos(merkuryKat) * 0.15;
+		merkuryKat += 0.007;
 	}
-	else katGlowny = 0.0;
+	else merkuryKat = 0;
+
+	if (wenusKat <= 360) {
+		wenusX = sin(wenusKat) * 0.25;
+		wenusY = cos(wenusKat) * 0.25;
+		wenusKat += 0.006;
+	}
+	else wenusKat = 0;
+
+	if (ziemiaKat <= 360) {
+		ziemiaX = sin(ziemiaKat) * 0.35;
+		ziemiaY = cos(ziemiaKat) * 0.35;
+		ziemiaKat += 0.005;
+	}
+	else ziemiaKat = 0;
+
+	if (marsKat <= 360) {
+		marsX = sin(marsKat) * 0.45;
+		marsY = cos(marsKat) * 0.45;
+		marsKat += 0.004;
+	}
+	else marsKat = 0;
+
+	if (jowiszKat <= 360) {
+		jowiszX = sin(jowiszKat) * 0.55;
+		jowiszY = cos(jowiszKat) * 0.55;
+		jowiszKat += 0.003;
+	}
+	else jowiszKat = 0;
+
+	if (saturnKat <= 360) {
+		saturnX = sin(saturnKat) * 0.65;
+		saturnY = cos(saturnKat) * 0.65;
+		saturnKat += 0.002;
+	}
+	else saturnKat = 0;
+
+	if (uranKat <= 360) {
+		uranX = sin(uranKat) * 0.75;
+		uranY = cos(uranKat) * 0.75;
+		uranKat += 0.001;
+	}
+	else uranKat = 0;
+
+	if (neptunKat <= 360) {
+		neptunX = sin(neptunKat) * 0.85;
+		neptunY = cos(neptunKat) * 0.85;
+		neptunKat += 0.0009;
+	}
+	else neptunKat = 0;
 }
 
 int main(int argc, char **argv) {
