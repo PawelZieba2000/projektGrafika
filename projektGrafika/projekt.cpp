@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <cmath>
 
+float ksiezycR = 0.005;
 
 double merkuryKat = 45;
 float merkuryX = sin(merkuryKat) * 0.15;
@@ -15,7 +16,12 @@ float wenusR = 0.02;
 double ziemiaKat = 135;
 float ziemiaX = sin(ziemiaKat) * 0.35;
 float ziemiaY = cos(ziemiaKat) * 0.35;
+double ksiezycZiemiiKat = 0;
 float ziemiaR = 0.02;
+float ksiezycZiemiiX = ziemiaX + (sin(ksiezycZiemiiKat) * (ziemiaR + 0.01));
+float ksiezycZiemiiY = ziemiaY + (cos(ksiezycZiemiiKat) * (ziemiaR + 0.01));
+
+
 
 double marsKat = 180;
 float marsX = sin(marsKat) * 0.45;
@@ -50,6 +56,29 @@ void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwo
 	glPushMatrix();
 	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0f);
 	glColor3f(czerwony, zielony, niebieski);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(p, q);
+	while (true) {
+		if (kat <= 360) {
+			p = 0.0 + sin(kat) * promien;
+			q = 0.0 + cos(kat) * promien;
+			glVertex2f(p, q);
+		}
+		else break;
+		kat += 0.1;
+	}
+	glEnd();
+	glPopMatrix();
+}
+
+void ksiezyc(float promien, float wspSrodkaX, float wspSrodkaY) {
+	float p = 0.0;
+	float q = 0.0;
+	double kat = 0.0;
+
+	glPushMatrix();
+	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0f);
+	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex2f(p, q);
 	while (true) {
@@ -125,6 +154,7 @@ void wyswietlanko() {
 	//Ziemia
 	orbita(0.35);
 	nowaPlaneta(ziemiaR, ziemiaX, ziemiaY, 0.1, 0.3, 0.7);
+	ksiezyc(ksiezycR, ksiezycZiemiiX, ksiezycZiemiiY);
 
 	//Mars
 	orbita(0.45);
@@ -177,6 +207,13 @@ void timer(int) {
 		ziemiaKat += 0.005;
 	}
 	else ziemiaKat = 0;
+
+	if (ksiezycZiemiiKat <= 360) {
+		ksiezycZiemiiX = ziemiaX + (sin(ksiezycZiemiiKat) * (ziemiaR + 0.01));
+		ksiezycZiemiiY = ziemiaY + (cos(ksiezycZiemiiKat) * (ziemiaR + 0.01));
+		ksiezycZiemiiKat += 0.1;
+	}
+	else ksiezycZiemiiKat = 0;
 
 	if (marsKat <= 360) {
 		marsX = sin(marsKat) * 0.45;
