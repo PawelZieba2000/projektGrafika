@@ -28,31 +28,41 @@ float marsX = sin(marsKat) * 0.45;
 float marsY = cos(marsKat) * 0.45;
 float marsR = 0.02;
 double ksiezycMarsaKat = 0;
-float ksiezycMarsaX1 = marsX + (sin(ksiezycMarsaKat) * (marsR + 0.1));
-float ksiezycMarsaX2 = marsX + (sin(ksiezycMarsaKat + 180) * (marsR + 0.01));
-float ksiezycMarsaY1 = marsY + (cos(ksiezycMarsaKat) * (marsR + 0.1));
-float ksiezycMarsaY2 = marsY + (cos(ksiezycMarsaKat + 180) * (marsR + 0.01));
+float ksiezycMarsaX = marsX + (sin(ksiezycMarsaKat) * (marsR + 0.1));
+float ksiezycMarsaY = marsY + (cos(ksiezycMarsaKat) * (marsR + 0.1));
 
 
 double jowiszKat = 225;
 float jowiszX = sin(jowiszKat) * 0.55;
 float jowiszY = cos(jowiszKat) * 0.55;
 float jowiszR = 0.04;
+double ksiezycJowiszaKat = 0;
+float ksiezycJowiszaX = jowiszX + (sin(ksiezycJowiszaKat) * (jowiszR + 0.1));
+float ksiezycJowiszaY = jowiszY + (cos(ksiezycJowiszaKat) * (jowiszR + 0.1));
 
 double saturnKat = 270;
 float saturnX = sin(saturnKat) * 0.65;
 float saturnY = cos(saturnKat) * 0.65;
 float saturnR = 0.038;
+double ksiezycSaturnaKat = 0;
+float ksiezycSaturnaX = saturnX + (sin(ksiezycSaturnaKat) * (saturnR + 0.1));
+float ksiezycSaturnaY = saturnY + (cos(ksiezycSaturnaKat) * (saturnR + 0.1));
 
 double uranKat = 315;
 float uranX = sin(uranKat) * 0.75;
 float uranY = cos(uranKat) * 0.75;
 float uranR = 0.03;
+double ksiezycUranuKat = 0;
+float ksiezycUranuX = uranX + (sin(ksiezycUranuKat) * (uranR + 0.1));
+float ksiezycUranuY = uranY + (cos(ksiezycUranuKat) * (uranR + 0.1));
 
 double neptunKat = 0;
 float neptunX = sin(neptunKat) * 0.85;
 float neptunY = cos(neptunKat) * 0.85;
 float neptunR = 0.03;
+double ksiezycNeptunaKat = 0;
+float ksiezycNeptunaX = neptunX + (sin(ksiezycNeptunaKat) * (neptunR + 0.1));
+float ksiezycNeptunaY = neptunY + (cos(ksiezycNeptunaKat) * (neptunR + 0.1));
 
 void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwony, float zielony, float niebieski) {
 	float p = 0.0;
@@ -165,12 +175,12 @@ void wyswietlanko() {
 	//Mars
 	orbita(0.45);
 	nowaPlaneta(marsR, marsX, marsY, 1.0, 0.35, 0.0);
-	ksiezyc(ksiezycR, ksiezycMarsaX1, ksiezycMarsaY1);
-	ksiezyc(ksiezycR, ksiezycMarsaX2, ksiezycMarsaY2);
+	ksiezyc(ksiezycR, ksiezycMarsaX, ksiezycMarsaY);
 
 	//Jowisz
 	orbita(0.55);
 	nowaPlaneta(jowiszR, jowiszX, jowiszY, 1.0, 0.6, 0.0);
+	ksiezyc(ksiezycR, ksiezycJowiszaX, ksiezycJowiszaY);
 
 	//Saturn
 	orbita(0.65);
@@ -178,16 +188,19 @@ void wyswietlanko() {
 	orbitaPlanety(0.048, saturnX, saturnY);
 	orbitaPlanety(0.046, saturnX, saturnY);
 	nowaPlaneta(saturnR, saturnX, saturnY, 1.0, 0.8, 0.0);
+	ksiezyc(ksiezycR, ksiezycSaturnaX, ksiezycSaturnaY);
 
 	//Uran
 	orbita(0.75);
 	orbitaPlanety(0.04, uranX, uranY);
 	nowaPlaneta(uranR, uranX, uranY, 0.0, 0.9, 1.0);
+	ksiezyc(ksiezycR, ksiezycUranuX, ksiezycUranuY);
 
 	//Neptun
 	orbita(0.85);
 	orbitaPlanety(0.04, neptunX, neptunY);
 	nowaPlaneta(neptunR, neptunX, neptunY, 0.0, 0.7, 1.0);
+	ksiezyc(ksiezycR, ksiezycNeptunaX, ksiezycNeptunaY);
 
 	glFlush();
 	inicjalizacja();
@@ -197,12 +210,12 @@ void timer(int) {
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 30, timer, 0);
 
-	if (merkuryKat <= 360) {
+	if (merkuryKat >= 0) {
 		merkuryX = sin(merkuryKat) * 0.15;
 		merkuryY = cos(merkuryKat) * 0.15;
-		merkuryKat += 0.007;
+		merkuryKat -= 0.007;
 	}
-	else merkuryKat = 0;
+	else merkuryKat = 360;
 
 	if (wenusKat <= 360) {
 		wenusX = sin(wenusKat) * 0.25;
@@ -211,17 +224,17 @@ void timer(int) {
 	}
 	else wenusKat = 0;
 
-	if (ziemiaKat <= 360) {
+	if (ziemiaKat >= 0) {
 		ziemiaX = sin(ziemiaKat) * 0.35;
 		ziemiaY = cos(ziemiaKat) * 0.35;
-		ziemiaKat += 0.005;
+		ziemiaKat -= 0.005;
 	}
-	else ziemiaKat = 0;
+	else ziemiaKat = 360;
 
 	if (ksiezycZiemiiKat <= 360) {
 		ksiezycZiemiiX = ziemiaX + (sin(ksiezycZiemiiKat) * (ziemiaR + 0.01));
 		ksiezycZiemiiY = ziemiaY + (cos(ksiezycZiemiiKat) * (ziemiaR + 0.01));
-		ksiezycZiemiiKat += 0.1;
+		ksiezycZiemiiKat += 0.35;
 	}
 	else ksiezycZiemiiKat = 0;
 
@@ -232,22 +245,28 @@ void timer(int) {
 	}
 	else marsKat = 0;
 
-	if (ksiezycMarsaKat <= 360) {
+	if (ksiezycMarsaKat >= 0) {
 
-		ksiezycMarsaX1 = marsX + (sin(ksiezycMarsaKat) * (marsR + 0.01));
-		ksiezycMarsaX2 = marsX + (sin(ksiezycMarsaKat + 180) * (marsR + 0.01));
-		ksiezycMarsaY1 = marsY + (cos(ksiezycMarsaKat) * (marsR + 0.01));
-		ksiezycMarsaY2 = marsY + (cos(ksiezycMarsaKat + 180) * (marsR + 0.01));
-		ksiezycMarsaKat += 0.1;
+		ksiezycMarsaX = marsX + (sin(ksiezycMarsaKat) * (marsR + 0.01));
+		ksiezycMarsaY = marsY + (cos(ksiezycMarsaKat) * (marsR + 0.01));
+		ksiezycMarsaKat -= 0.3;
 	}
-	else ksiezycMarsaKat = 0;
+	else ksiezycMarsaKat = 360;
 
-	if (jowiszKat <= 360) {
+	if (jowiszKat >= 0) {
 		jowiszX = sin(jowiszKat) * 0.55;
 		jowiszY = cos(jowiszKat) * 0.55;
-		jowiszKat += 0.003;
+		jowiszKat -= 0.003;
 	}
-	else jowiszKat = 0;
+	else jowiszKat = 360;
+
+	if (ksiezycJowiszaKat <= 360) {
+
+		ksiezycJowiszaX = jowiszX + (sin(ksiezycJowiszaKat) * (jowiszR + 0.01));
+		ksiezycJowiszaY = jowiszY + (cos(ksiezycJowiszaKat) * (jowiszR + 0.01));
+		ksiezycJowiszaKat += 0.25;
+	}
+	else ksiezycJowiszaKat = 0;
 
 	if (saturnKat <= 360) {
 		saturnX = sin(saturnKat) * 0.65;
@@ -256,12 +275,28 @@ void timer(int) {
 	}
 	else saturnKat = 0;
 
-	if (uranKat <= 360) {
+	if (ksiezycSaturnaKat >= 0) {
+
+		ksiezycSaturnaX = saturnX + (sin(ksiezycSaturnaKat) * (saturnR + 0.01));
+		ksiezycSaturnaY = saturnY + (cos(ksiezycSaturnaKat) * (saturnR + 0.01));
+		ksiezycSaturnaKat -= 0.2;
+	}
+	else ksiezycSaturnaKat = 360;
+
+	if (uranKat >= 0) {
 		uranX = sin(uranKat) * 0.75;
 		uranY = cos(uranKat) * 0.75;
-		uranKat += 0.001;
+		uranKat -= 0.001;
 	}
-	else uranKat = 0;
+	else uranKat = 360;
+
+	if (ksiezycUranuKat <= 360) {
+
+		ksiezycUranuX = uranX + (sin(ksiezycUranuKat) * (uranR + 0.01));
+		ksiezycUranuY = uranY + (cos(ksiezycUranuKat) * (uranR + 0.01));
+		ksiezycUranuKat += 0.15;
+	}
+	else ksiezycUranuKat = 0;
 
 	if (neptunKat <= 360) {
 		neptunX = sin(neptunKat) * 0.85;
@@ -269,6 +304,14 @@ void timer(int) {
 		neptunKat += 0.0009;
 	}
 	else neptunKat = 0;
+
+	if (ksiezycNeptunaKat >= 0) {
+
+		ksiezycNeptunaX = neptunX + (sin(ksiezycNeptunaKat) * (neptunR + 0.01));
+		ksiezycNeptunaY = neptunY + (cos(ksiezycNeptunaKat) * (neptunR + 0.01));
+		ksiezycNeptunaKat -= 0.1;
+	}
+	else ksiezycNeptunaKat = 360;
 }
 
 int main(int argc, char **argv) {
