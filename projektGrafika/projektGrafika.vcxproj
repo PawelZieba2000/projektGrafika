@@ -84,6 +84,7 @@
     <LinkIncremental>true</LinkIncremental>
     <ExternalIncludePath>$(SolutionDir)Rozszerzenia\freeglut\include;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>"$(SolutionDir)Rozszerzenia\freeglut\lib\$(Platform)";$(LibraryPath)</LibraryPath>
+    <IncludePath>"$(SolutionDir)Rozszerzenia\freeglut\include";$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -137,6 +138,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\warei\source\repos\projektGrafika\Rozszerzenia\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
