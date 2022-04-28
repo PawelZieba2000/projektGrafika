@@ -309,7 +309,7 @@ void timer(int) {
 
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
-	int x = 800;
+	int x = (int)(glutGet(GLUT_SCREEN_HEIGHT)) / 1.3;
 	int y = x;
 	glutInitWindowSize(x, y);
 	glutInitWindowPosition((int)(glutGet(GLUT_SCREEN_WIDTH) - x) / 2, (int)(glutGet(GLUT_SCREEN_HEIGHT) - y) / 2);
