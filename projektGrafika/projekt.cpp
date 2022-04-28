@@ -213,24 +213,22 @@ void timer(int) {
 	if (merkuryKat >= 0) {
 		merkuryX = sin(merkuryKat) * 0.15;
 		merkuryY = cos(merkuryKat) * 0.15;
-		merkuryKat -= 0.007;
+		merkuryKat -= 0.07;
 	}
 	else merkuryKat = 360;
-
 	if (wenusKat <= 360) {
 		wenusX = sin(wenusKat) * 0.25;
 		wenusY = cos(wenusKat) * 0.25;
-		wenusKat += 0.006;
+		wenusKat += 0.04;
 	}
 	else wenusKat = 0;
 
 	if (ziemiaKat >= 0) {
 		ziemiaX = sin(ziemiaKat) * 0.35;
 		ziemiaY = cos(ziemiaKat) * 0.35;
-		ziemiaKat -= 0.005;
+		ziemiaKat -= 0.025;
 	}
 	else ziemiaKat = 360;
-
 	if (ksiezycZiemiiKat <= 360) {
 		ksiezycZiemiiX = ziemiaX + (sin(ksiezycZiemiiKat) * (ziemiaR + 0.01));
 		ksiezycZiemiiY = ziemiaY + (cos(ksiezycZiemiiKat) * (ziemiaR + 0.01));
@@ -241,10 +239,9 @@ void timer(int) {
 	if (marsKat <= 360) {
 		marsX = sin(marsKat) * 0.45;
 		marsY = cos(marsKat) * 0.45;
-		marsKat += 0.004;
+		marsKat += 0.01;
 	}
 	else marsKat = 0;
-
 	if (ksiezycMarsaKat >= 0) {
 
 		ksiezycMarsaX = marsX + (sin(ksiezycMarsaKat) * (marsR + 0.01));
@@ -256,10 +253,9 @@ void timer(int) {
 	if (jowiszKat >= 0) {
 		jowiszX = sin(jowiszKat) * 0.55;
 		jowiszY = cos(jowiszKat) * 0.55;
-		jowiszKat -= 0.003;
+		jowiszKat -= 0.006;
 	}
 	else jowiszKat = 360;
-
 	if (ksiezycJowiszaKat <= 360) {
 
 		ksiezycJowiszaX = jowiszX + (sin(ksiezycJowiszaKat) * (jowiszR + 0.01));
@@ -271,10 +267,9 @@ void timer(int) {
 	if (saturnKat <= 360) {
 		saturnX = sin(saturnKat) * 0.65;
 		saturnY = cos(saturnKat) * 0.65;
-		saturnKat += 0.002;
+		saturnKat += 0.003;
 	}
 	else saturnKat = 0;
-
 	if (ksiezycSaturnaKat >= 0) {
 
 		ksiezycSaturnaX = saturnX + (sin(ksiezycSaturnaKat) * (saturnR + 0.01));
@@ -286,10 +281,9 @@ void timer(int) {
 	if (uranKat >= 0) {
 		uranX = sin(uranKat) * 0.75;
 		uranY = cos(uranKat) * 0.75;
-		uranKat -= 0.001;
+		uranKat -= 0.0013;
 	}
 	else uranKat = 360;
-
 	if (ksiezycUranuKat <= 360) {
 
 		ksiezycUranuX = uranX + (sin(ksiezycUranuKat) * (uranR + 0.01));
@@ -301,10 +295,9 @@ void timer(int) {
 	if (neptunKat <= 360) {
 		neptunX = sin(neptunKat) * 0.85;
 		neptunY = cos(neptunKat) * 0.85;
-		neptunKat += 0.0009;
+		neptunKat += 0.0005;
 	}
 	else neptunKat = 0;
-
 	if (ksiezycNeptunaKat >= 0) {
 
 		ksiezycNeptunaX = neptunX + (sin(ksiezycNeptunaKat) * (neptunR + 0.01));
