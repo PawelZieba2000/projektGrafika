@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <cmath>
+#include <iostream>
 
 float ksiezycR = 0.005;
 
