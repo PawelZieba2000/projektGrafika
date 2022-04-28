@@ -27,6 +27,12 @@ double marsKat = 180;
 float marsX = sin(marsKat) * 0.45;
 float marsY = cos(marsKat) * 0.45;
 float marsR = 0.02;
+double ksiezycMarsaKat = 0;
+float ksiezycMarsaX1 = marsX + (sin(ksiezycMarsaKat) * (marsR + 0.1));
+float ksiezycMarsaX2 = marsX + (sin(ksiezycMarsaKat + 180) * (marsR + 0.01));
+float ksiezycMarsaY1 = marsY + (cos(ksiezycMarsaKat) * (marsR + 0.1));
+float ksiezycMarsaY2 = marsY + (cos(ksiezycMarsaKat + 180) * (marsR + 0.01));
+
 
 double jowiszKat = 225;
 float jowiszX = sin(jowiszKat) * 0.55;
@@ -159,6 +165,8 @@ void wyswietlanko() {
 	//Mars
 	orbita(0.45);
 	nowaPlaneta(marsR, marsX, marsY, 1.0, 0.35, 0.0);
+	ksiezyc(ksiezycR, ksiezycMarsaX1, ksiezycMarsaY1);
+	ksiezyc(ksiezycR, ksiezycMarsaX2, ksiezycMarsaY2);
 
 	//Jowisz
 	orbita(0.55);
@@ -167,6 +175,8 @@ void wyswietlanko() {
 	//Saturn
 	orbita(0.65);
 	orbitaPlanety(0.05, saturnX, saturnY);
+	orbitaPlanety(0.048, saturnX, saturnY);
+	orbitaPlanety(0.046, saturnX, saturnY);
 	nowaPlaneta(saturnR, saturnX, saturnY, 1.0, 0.8, 0.0);
 
 	//Uran
@@ -221,6 +231,16 @@ void timer(int) {
 		marsKat += 0.004;
 	}
 	else marsKat = 0;
+
+	if (ksiezycMarsaKat <= 360) {
+
+		ksiezycMarsaX1 = marsX + (sin(ksiezycMarsaKat) * (marsR + 0.01));
+		ksiezycMarsaX2 = marsX + (sin(ksiezycMarsaKat + 180) * (marsR + 0.01));
+		ksiezycMarsaY1 = marsY + (cos(ksiezycMarsaKat) * (marsR + 0.01));
+		ksiezycMarsaY2 = marsY + (cos(ksiezycMarsaKat + 180) * (marsR + 0.01));
+		ksiezycMarsaKat += 0.1;
+	}
+	else ksiezycMarsaKat = 0;
 
 	if (jowiszKat <= 360) {
 		jowiszX = sin(jowiszKat) * 0.55;
