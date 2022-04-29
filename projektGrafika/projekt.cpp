@@ -2,6 +2,12 @@
 #include <cmath>
 #include <iostream>
 
+double* orbityAst;
+double* katyAst;
+double* xAst;
+double* yAst;
+int pasAst = 200;
+
 float ksiezycR = 0.005;
 
 double merkuryKat = 45;
@@ -65,7 +71,9 @@ double ksiezycNeptunaKat = 0;
 float ksiezycNeptunaX = neptunX + (sin(ksiezycNeptunaKat) * (neptunR + 0.1));
 float ksiezycNeptunaY = neptunY + (cos(ksiezycNeptunaKat) * (neptunR + 0.1));
 
-void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwony, float zielony, float niebieski) {
+
+
+void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwony, float zielony, float niebieski, const char * filename) {
 	float p = 0.0;
 	float q = 0.0;
 	double kat = 0.0;
@@ -158,50 +166,58 @@ void inicjalizacja() {
 
 void wyswietlanko() {
 	//slonce
-	nowaPlaneta(0.08, 0.0, 0.0, 1.0, 0.9, 0.0);
+	nowaPlaneta(0.08, 0.0, 0.0, 1.0, 0.9, 0.0, "");
 
 	//Merkury
 	orbita(0.15);
-	nowaPlaneta(merkuryR, merkuryX, merkuryY, 1.0, 1.0, 1.0);
+	nowaPlaneta(merkuryR, merkuryX, merkuryY, 1.0, 1.0, 1.0, "");
 
 	//Wenus
 	orbita(0.25);
-	nowaPlaneta(wenusR, wenusX, wenusY, 1.0, 0.9, 0.3);
+	nowaPlaneta(wenusR, wenusX, wenusY, 1.0, 0.9, 0.3, "");
 
 	//Ziemia
 	orbita(0.35);
-	nowaPlaneta(ziemiaR, ziemiaX, ziemiaY, 0.1, 0.3, 0.7);
+	nowaPlaneta(ziemiaR, ziemiaX, ziemiaY, 0.1, 0.3, 0.7, "");
 	ksiezyc(ksiezycR, ksiezycZiemiiX, ksiezycZiemiiY);
 
 	//Mars
 	orbita(0.45);
-	nowaPlaneta(marsR, marsX, marsY, 1.0, 0.35, 0.0);
+	nowaPlaneta(marsR, marsX, marsY, 1.0, 0.35, 0.0, "");
 	ksiezyc(ksiezycR, ksiezycMarsaX, ksiezycMarsaY);
 
+	//0.48 - 0.6
+
+	for (int i = 0; i < pasAst; i++)
+	{
+		nowaPlaneta(0.005, xAst[i], yAst[i], 0.5, 0.5, 0.5, "");
+	}
 	//Jowisz
-	orbita(0.55);
-	nowaPlaneta(jowiszR, jowiszX, jowiszY, 1.0, 0.6, 0.0);
+	orbita(0.65);
+	nowaPlaneta(jowiszR, jowiszX, jowiszY, 1.0, 0.6, 0.0, "");
 	ksiezyc(ksiezycR, ksiezycJowiszaX, ksiezycJowiszaY);
 
 	//Saturn
-	orbita(0.65);
+	orbita(0.75);
 	orbitaPlanety(0.05, saturnX, saturnY);
 	orbitaPlanety(0.048, saturnX, saturnY);
 	orbitaPlanety(0.046, saturnX, saturnY);
-	nowaPlaneta(saturnR, saturnX, saturnY, 1.0, 0.8, 0.0);
+	nowaPlaneta(saturnR, saturnX, saturnY, 1.0, 0.8, 0.0, "");
 	ksiezyc(ksiezycR, ksiezycSaturnaX, ksiezycSaturnaY);
 
 	//Uran
-	orbita(0.75);
+	orbita(0.85);
 	orbitaPlanety(0.04, uranX, uranY);
-	nowaPlaneta(uranR, uranX, uranY, 0.0, 0.9, 1.0);
+	nowaPlaneta(uranR, uranX, uranY, 0.0, 0.9, 1.0, "");
 	ksiezyc(ksiezycR, ksiezycUranuX, ksiezycUranuY);
 
 	//Neptun
-	orbita(0.85);
+	orbita(0.95);
 	orbitaPlanety(0.04, neptunX, neptunY);
-	nowaPlaneta(neptunR, neptunX, neptunY, 0.0, 0.7, 1.0);
+	nowaPlaneta(neptunR, neptunX, neptunY, 0.0, 0.7, 1.0, "");
 	ksiezyc(ksiezycR, ksiezycNeptunaX, ksiezycNeptunaY);
+
+	
 
 	glFlush();
 	inicjalizacja();
@@ -251,9 +267,19 @@ void timer(int) {
 	}
 	else ksiezycMarsaKat = 360;
 
+	for (int i = 0; i < pasAst; i++)
+	{
+		if (katyAst[i] <= 360) {
+			xAst[i] = sin(katyAst[i]) * orbityAst[i];
+			yAst[i] = cos(katyAst[i]) * orbityAst[i];
+			katyAst[i] += 0.02;
+		}
+		else katyAst[i] = 0;
+	}
+
 	if (jowiszKat >= 0) {
-		jowiszX = sin(jowiszKat) * 0.55;
-		jowiszY = cos(jowiszKat) * 0.55;
+		jowiszX = sin(jowiszKat) * 0.65;
+		jowiszY = cos(jowiszKat) * 0.65;
 		jowiszKat -= 0.006;
 	}
 	else jowiszKat = 360;
@@ -266,8 +292,8 @@ void timer(int) {
 	else ksiezycJowiszaKat = 0;
 
 	if (saturnKat <= 360) {
-		saturnX = sin(saturnKat) * 0.65;
-		saturnY = cos(saturnKat) * 0.65;
+		saturnX = sin(saturnKat) * 0.75;
+		saturnY = cos(saturnKat) * 0.75;
 		saturnKat += 0.003;
 	}
 	else saturnKat = 0;
@@ -280,8 +306,8 @@ void timer(int) {
 	else ksiezycSaturnaKat = 360;
 
 	if (uranKat >= 0) {
-		uranX = sin(uranKat) * 0.75;
-		uranY = cos(uranKat) * 0.75;
+		uranX = sin(uranKat) * 0.85;
+		uranY = cos(uranKat) * 0.85;
 		uranKat -= 0.0013;
 	}
 	else uranKat = 360;
@@ -294,8 +320,8 @@ void timer(int) {
 	else ksiezycUranuKat = 0;
 
 	if (neptunKat <= 360) {
-		neptunX = sin(neptunKat) * 0.85;
-		neptunY = cos(neptunKat) * 0.85;
+		neptunX = sin(neptunKat) * 0.95;
+		neptunY = cos(neptunKat) * 0.95;
 		neptunKat += 0.0005;
 	}
 	else neptunKat = 0;
@@ -308,10 +334,29 @@ void timer(int) {
 	else ksiezycNeptunaKat = 360;
 }
 
+
+
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
-	int x = (int)(glutGet(GLUT_SCREEN_HEIGHT)) / 1.3;
+	int x = (int)(glutGet(GLUT_SCREEN_HEIGHT)) / 1.2;
 	int y = x;
+	srand(time(0));
+	orbityAst = new double[pasAst];
+	for (int i = 0; i < pasAst; i++)
+	{
+		double random = rand() % (60 - 48 + 1) + 48;
+		orbityAst[i] = random / 100;
+		//std::cout << random / 100 << std::endl;
+	}
+	katyAst = new double[pasAst];
+	xAst = new double[pasAst];
+	yAst = new double[pasAst];
+	for (int i = 0; i < pasAst; i++)
+	{
+		katyAst[i] = rand() % 360;
+		xAst[i] = sin(katyAst[i]) * orbityAst[i];
+		yAst[i] = cos(katyAst[i]) * orbityAst[i];
+	}
 	glutInitWindowSize(x, y);
 	glutInitWindowPosition((int)(glutGet(GLUT_SCREEN_WIDTH) - x) / 2, (int)(glutGet(GLUT_SCREEN_HEIGHT) - y) / 2);
 	glutCreateWindow("Uklad sloneczny");
