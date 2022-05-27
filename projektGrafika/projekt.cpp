@@ -76,21 +76,29 @@ float ksiezycNeptunaY = neptunY + (cos(ksiezycNeptunaKat) * (neptunR + 0.1));
 void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwony, float zielony, float niebieski, const char * filename) {
 	float p = 0.0;
 	float q = 0.0;
+	float r = 0.0;
 	double kat = 0.0;
+	double kat2 = 0.0;
 
 	glPushMatrix();
-	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0f);
+	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
 	glColor3f(czerwony, zielony, niebieski);
 	glBegin(GL_TRIANGLE_FAN);
-	glVertex2f(p, q);
+	glVertex3f(p, q, r);
 	while (true) {
+		
 		if (kat <= 360) {
-			p = 0.0 + sin(kat) * promien;
-			q = 0.0 + cos(kat) * promien;
-			glVertex2f(p, q);
+			r = 0.0 + cos(kat) * promien;
+			if (kat2 <= 360) {
+				p = 0.0 + sin(kat) * cos(kat2) * promien;
+				q = 0.0 + sin(kat) * sin(kat2) * promien;
+				glVertex3f(p, q, r);
+			}
+			else break;
+			kat2 += 1;
 		}
 		else break;
-		kat += 0.1;
+		kat += 1;
 	}
 	glEnd();
 	glPopMatrix();
@@ -161,7 +169,7 @@ void orbitaPlanety(float promien, float wspX, float wspY) {
 
 void inicjalizacja() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void wyswietlanko() {
