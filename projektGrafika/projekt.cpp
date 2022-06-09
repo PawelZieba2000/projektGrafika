@@ -85,29 +85,45 @@ void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwo
 	double kat = 0.0;
 	double kat2 = 0.0;
 
+	GLfloat qaBlack[] = { 0, 0, 0, 1 };
+	GLfloat qaColor[] = { czerwony, zielony, niebieski, 1 };
+	GLfloat qaWhite[] = { 1, 1, 1, 1 };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, qaColor);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, qaColor);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);
+	glMaterialf(GL_FRONT, GL_SHININESS, 100);
+
 	glPushMatrix();
-	glColor3f(czerwony, zielony, niebieski);
+	//glColor3f(czerwony, zielony, niebieski);
 	GLUquadric* quad;
 	quad = gluNewQuadric();
 	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
 	gluSphere(quad, promien, 100, 20);
-	/*glBegin(GL_SPHERE_MAP);
-	glVertex3f(p, q, r);
-	while (true) {
-		
-		if (kat <= 360) {
-			r = 0.0 + cos(kat) * promien;
-			if (kat2 <= 360) {
-				p = 0.0 + sin(kat) * cos(kat2) * promien;
-				q = 0.0 + sin(kat) * sin(kat2) * promien;
-				glVertex3f(p, q, r);
-			}
-			else break;
-			kat2 += 1;
-		}
-		else break;
-		kat += 1;
-	}*/
+	glEnd();
+	glPopMatrix();
+}
+
+void slonce(float promien, float wspSrodkaX, float wspSrodkaY, float czerwony, float zielony, float niebieski, const char* filename) {
+	float p = 0.0;
+	float q = 0.0;
+	float r = 0.0;
+	double kat = 0.0;
+	double kat2 = 0.0;
+
+	GLfloat qaBlack[] = { 0, 0, 0, 0.2 };
+	GLfloat qaColor[] = { czerwony, zielony, niebieski, 1.0 };
+	GLfloat qaWhite[] = { 1, 1, 1, 0.2 };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, qaColor);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, qaColor);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);
+	glMaterialf(GL_FRONT, GL_SHININESS, 128);
+
+	glPushMatrix();
+	//glColor4f(czerwony, zielony, niebieski, 0.2);
+	GLUquadric* quad;
+	quad = gluNewQuadric();
+	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
+	gluSphere(quad, promien, 100, 20);
 	glEnd();
 	glPopMatrix();
 }
@@ -123,17 +139,6 @@ void ksiezyc(float promien, float wspSrodkaX, float wspSrodkaY) {
 	quad = gluNewQuadric();
 	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
 	gluSphere(quad, promien, 100, 20);
-	/*glBegin(GL_SPHERE_MAP);
-	glVertex2f(p, q);
-	while (true) {
-		if (kat <= 360) {
-			p = 0.0 + sin(kat) * promien;
-			q = 0.0 + cos(kat) * promien;
-			glVertex2f(p, q);
-		}
-		else break;
-		kat += 0.1;
-	}*/
 	glEnd();
 	glPopMatrix();
 }
@@ -182,11 +187,25 @@ void inicjalizacja() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-1, 1, -1, 1, -1, 1);
+	glOrtho(1, 1, 1, 1, -1, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	GLfloat qaAmbientLight[] = { 0.2,0.2,0.2,1.0 };
+	GLfloat qaDiffuseLight[] = { 0.8,0.8,0.8,1.0 };
+	GLfloat qaSpecularLight[] = { 1.0,1.0,1.0,1.0 };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
+
+	GLfloat qaLightPosition[] = { 0,0,0,1.0 };
+	glLightfv(GL_LIGHT0, GL_POSITION, qaLightPosition);
 
 	gluLookAt(x, 0.0f, z, x, 0.0f, z - 1.0f, 0.0f, 1.0f, 0.0f);
 	glRotatef(katKameraX, 1, 0, 0);
@@ -195,7 +214,7 @@ void inicjalizacja() {
 
 void wyswietlanko() {
 	//slonce
-	nowaPlaneta(0.08, 0.0, 0.0, 1.0, 0.9, 0.0, "");
+	slonce(0.08, 0.0, 0.0, 1.0, 0.9, 0.0, "");
 
 	//Merkury
 	orbita(0.15);
