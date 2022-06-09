@@ -2,10 +2,9 @@
 #include <cmath>
 #include <iostream>
 
-
+//kamera
 float katKameraX = 0.0, katKameraY = 0.0;
 float x = 0.0f, z = 0.05f;
-
 
 double* orbityAst;
 double* katyAst;
@@ -94,7 +93,6 @@ void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwo
 	glMaterialf(GL_FRONT, GL_SHININESS, 100);
 
 	glPushMatrix();
-	//glColor3f(czerwony, zielony, niebieski);
 	GLUquadric* quad;
 	quad = gluNewQuadric();
 	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
@@ -110,16 +108,15 @@ void slonce(float promien, float wspSrodkaX, float wspSrodkaY, float czerwony, f
 	double kat = 0.0;
 	double kat2 = 0.0;
 
-	GLfloat qaBlack[] = { 0, 0, 0, 0.2 };
+	GLfloat qaBlack[] = { 0, 0, 0, 1 };
 	GLfloat qaColor[] = { czerwony, zielony, niebieski, 1.0 };
-	GLfloat qaWhite[] = { 1, 1, 1, 0.2 };
+	GLfloat qaWhite[] = { 1, 1, 1, 1 };
 	glMaterialfv(GL_FRONT, GL_AMBIENT, qaColor);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, qaColor);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);
 	glMaterialf(GL_FRONT, GL_SHININESS, 128);
 
 	glPushMatrix();
-	//glColor4f(czerwony, zielony, niebieski, 0.2);
 	GLUquadric* quad;
 	quad = gluNewQuadric();
 	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
@@ -197,8 +194,8 @@ void inicjalizacja() {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 
-	GLfloat qaAmbientLight[] = { 0.2,0.2,0.2,1.0 };
-	GLfloat qaDiffuseLight[] = { 0.8,0.8,0.8,1.0 };
+	GLfloat qaAmbientLight[] = { 0.4,0.4,0.4,1.0 };
+	GLfloat qaDiffuseLight[] = { 0.6,0.6,0.6,1.0 };
 	GLfloat qaSpecularLight[] = { 1.0,1.0,1.0,1.0 };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
@@ -386,29 +383,19 @@ void obslugaKlawiszy(int key, int xx, int yy) {
 	float ulamek = 0.1f;
 
 	switch (key) {
-	case GLUT_KEY_LEFT:/*
-		katKamera -= 0.01f;
-		lx = sin(katKamera);
-		lz = -cos(katKamera);*/
+	case GLUT_KEY_LEFT:
 		std::cout << "lewo" << std::endl;
 		katKameraY--;
 		break;
-	case GLUT_KEY_RIGHT:/*
-		katKamera += 0.01f;
-		lx = sin(katKamera);
-		lz = -cos(katKamera);*/
+	case GLUT_KEY_RIGHT:
 		std::cout << "prawo" << std::endl;
 		katKameraY++;
 		break;
-	case GLUT_KEY_UP:/*
-		x += lx * ulamek;
-		z += lz * ulamek;*/
+	case GLUT_KEY_UP:
 		std::cout << "gora" << std::endl;
 		katKameraX -= 1.0f;
 		break;
-	case GLUT_KEY_DOWN:/*
-		x -= lx * ulamek;
-		z -= lz * ulamek;*/
+	case GLUT_KEY_DOWN:
 		std::cout << "dol" << std::endl;
 		katKameraX += 1.0f;
 		break;
@@ -425,7 +412,6 @@ int main(int argc, char **argv) {
 	{
 		double random = rand() % (60 - 48 + 1) + 48;
 		orbityAst[i] = random / 100;
-		//std::cout << random / 100 << std::endl;
 	}
 	katyAst = new double[pasAst];
 	xAst = new double[pasAst];
