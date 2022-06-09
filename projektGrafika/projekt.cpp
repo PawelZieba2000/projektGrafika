@@ -2,6 +2,11 @@
 #include <cmath>
 #include <iostream>
 
+
+float katKameraX = 0.0, katKameraY = 0.0;
+float x = 0.0f, z = 0.05f;
+
+
 double* orbityAst;
 double* katyAst;
 double* xAst;
@@ -81,9 +86,12 @@ void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwo
 	double kat2 = 0.0;
 
 	glPushMatrix();
-	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
 	glColor3f(czerwony, zielony, niebieski);
-	glBegin(GL_TRIANGLE_FAN);
+	GLUquadric* quad;
+	quad = gluNewQuadric();
+	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
+	gluSphere(quad, promien, 100, 20);
+	/*glBegin(GL_SPHERE_MAP);
 	glVertex3f(p, q, r);
 	while (true) {
 		
@@ -99,7 +107,7 @@ void nowaPlaneta(float promien, float wspSrodkaX, float wspSrodkaY, float czerwo
 		}
 		else break;
 		kat += 1;
-	}
+	}*/
 	glEnd();
 	glPopMatrix();
 }
@@ -110,9 +118,12 @@ void ksiezyc(float promien, float wspSrodkaX, float wspSrodkaY) {
 	double kat = 0.0;
 
 	glPushMatrix();
-	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0f);
 	glColor3f(1.0, 1.0, 1.0);
-	glBegin(GL_TRIANGLE_FAN);
+	GLUquadric* quad;
+	quad = gluNewQuadric();
+	glTranslatef(wspSrodkaX, wspSrodkaY, 0.0);
+	gluSphere(quad, promien, 100, 20);
+	/*glBegin(GL_SPHERE_MAP);
 	glVertex2f(p, q);
 	while (true) {
 		if (kat <= 360) {
@@ -122,7 +133,7 @@ void ksiezyc(float promien, float wspSrodkaX, float wspSrodkaY) {
 		}
 		else break;
 		kat += 0.1;
-	}
+	}*/
 	glEnd();
 	glPopMatrix();
 }
@@ -169,7 +180,17 @@ void orbitaPlanety(float promien, float wspX, float wspY) {
 
 void inicjalizacja() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-1, 1, -1, 1, -1, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	gluLookAt(x, 0.0f, z, x, 0.0f, z - 1.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(katKameraX, 1, 0, 0);
+	glRotatef(katKameraY, 0, 1, 0);
 }
 
 void wyswietlanko() {
@@ -342,7 +363,38 @@ void timer(int) {
 	else ksiezycNeptunaKat = 360;
 }
 
+void obslugaKlawiszy(int key, int xx, int yy) {
+	float ulamek = 0.1f;
 
+	switch (key) {
+	case GLUT_KEY_LEFT:/*
+		katKamera -= 0.01f;
+		lx = sin(katKamera);
+		lz = -cos(katKamera);*/
+		std::cout << "lewo" << std::endl;
+		katKameraY--;
+		break;
+	case GLUT_KEY_RIGHT:/*
+		katKamera += 0.01f;
+		lx = sin(katKamera);
+		lz = -cos(katKamera);*/
+		std::cout << "prawo" << std::endl;
+		katKameraY++;
+		break;
+	case GLUT_KEY_UP:/*
+		x += lx * ulamek;
+		z += lz * ulamek;*/
+		std::cout << "gora" << std::endl;
+		katKameraX -= 1.0f;
+		break;
+	case GLUT_KEY_DOWN:/*
+		x -= lx * ulamek;
+		z -= lz * ulamek;*/
+		std::cout << "dol" << std::endl;
+		katKameraX += 1.0f;
+		break;
+	}
+}
 
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
@@ -368,9 +420,11 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(x, y);
 	glutInitWindowPosition((int)(glutGet(GLUT_SCREEN_WIDTH) - x) / 2, (int)(glutGet(GLUT_SCREEN_HEIGHT) - y) / 2);
 	glutCreateWindow("Uklad sloneczny");
-	inicjalizacja();
 	glutDisplayFunc(wyswietlanko);
+	glutSpecialFunc(obslugaKlawiszy);
+	glEnable(GL_DEPTH_TEST);
 	glutTimerFunc(0, timer, 0);
+	inicjalizacja();
 	glutMainLoop();
 	return 0;
 }
